@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
 import Swal from 'sweetalert2';
+import { tap } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -12,10 +14,34 @@ export class ClientesComponent implements OnInit {
 
   public clientes: Cliente[];
 
-  constructor(private clienteService: ClienteService) { }
+  public paginador: any;
+
+  constructor(
+    private clienteService: ClienteService,
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit() {
-    this.clienteService.getClientes().subscribe(lstCliente => this.clientes = lstCliente);
+    this.activatedRoute.paramMap.subscribe(params => {
+      let page = +params.get('page');
+      if (!page) {
+        page = 0;
+      }
+      this.clienteService.getClientes(page)
+        .pipe(
+          tap((response: any) => {
+            console.log('Clientes component tap 3');
+            (response.content as Cliente[]).forEach(cliente => {
+              console.log(cliente.nombre);
+            });
+          })
+        ).subscribe(lstCliente => {
+          this.clientes = lstCliente.content as Cliente[];
+          this.paginador = lstCliente;
+
+        });
+    }
+    );
   }
 
   delete(cliente, Cliente) {

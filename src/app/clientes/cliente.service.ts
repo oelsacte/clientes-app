@@ -30,22 +30,25 @@ export class ClienteService {
   //   return this.http.get<Cliente[]>(this.urlEndPoint);
   // }
 
-  getClientes(): Observable<Cliente[]> {
-    return this.http.get(`${this.urlEndPoint}/clientes`).pipe(
+  getClientes(page: number): Observable<Cliente[]> {
+    return this.http.get(`${this.urlEndPoint}/clientes/page/${page}`).pipe(
       tap( (response: any) => {
         console.log('Cliente service tap 1');
         (response.content as Cliente[]).forEach(cliente => {
-
-        })
+          console.log(cliente.nombre);
+        });
       }),
-      map(response => {
-        const clientes = response as Cliente[];
-        return clientes.map(c => {
+      map( (response: any) => {
+        (response.content as Cliente[]).map(c => {
           c.nombre = c.nombre.toUpperCase();
-          // registerLocaleData(localeEs, 'es');
-          const datePipe = new DatePipe('es');
-          c.createAt = datePipe.transform(c.createAt, 'EEEE dd, MMMM yyyy'); // fullDate, formatDate(c.createAt, 'dd-MM-yyyy', 'en-US');
           return c;
+        });
+        return response;
+      }),
+      tap(response => {
+        console.log('Cliente service tap 2');
+        (response.content as Cliente[]).forEach(cliente => {
+          console.log(cliente.nombre);
         });
       })
     );

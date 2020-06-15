@@ -19,17 +19,17 @@
                 <th>eliminar</th>
             </thead>
             <tbody>
-                <tr *ngFor="let item of clientes">
-                    <td>{{item.id}}</td>
-                    <td>{{item.nombre}}</td>
-                    <td>{{item.apellido | uppercase }}</td>
-                    <td>{{item.email}}</td>
-                    <td>{{item.createAt}}</td>
+                <tr *ngFor="let cliente of clientes">
+                    <td>{{cliente.id}}</td>
+                    <td>{{cliente.nombre}}</td>
+                    <td>{{cliente.apellido | uppercase }}</td>
+                    <td>{{cliente.email}}</td>
+                    <td>{{cliente.createAt}}</td>
                     <td>
-                        <button type="button" name="editar" class="btn btn-primary btn-sm" [routerLink]="['/clientes/form', item.id]">Editar</button>
+                        <button type="button" name="editar" class="btn btn-primary btn-sm" [routerLink]="['/clientes/form', cliente.id]">Editar</button>
                     </td>
                     <td>
-                        <button type="button" name="eliminar" class="btn btn-danger btn-sm" (click)="delete(item)">Eliminar</button>
+                        <button type="button" name="eliminar" class="btn btn-danger btn-sm" (click)="delete(cliente)">Eliminar</button>
                     </td>
                 </tr>
             </tbody>

@@ -34,7 +34,7 @@ export class ClienteService {
     return this.http.get(`${this.urlEndPoint}/clientes`).pipe(
       tap( (response: any) => {
         console.log('Cliente service tap 1');
-        (response.content as Cliente[]).forEach(cliente => {
+        (response as Cliente[]).forEach(cliente => {
 
         })
       }),
@@ -71,7 +71,7 @@ export class ClienteService {
     .pipe(
       catchError( e => {
         this.router.navigate(['/clientes']);
-        console.log(e.error.mensaje);
+        console.log(e.error);
         Swal.fire('Error al editar al cliente', e.error.mensaje, 'error');
         return throwError(e);
       })

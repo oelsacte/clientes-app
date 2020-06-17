@@ -43,8 +43,8 @@ export class ClienteService {
         return clientes.map(c => {
           c.nombre = c.nombre.toUpperCase();
           // registerLocaleData(localeEs, 'es');
-          const datePipe = new DatePipe('es');
-          c.createAt = datePipe.transform(c.createAt, 'EEEE dd, MMMM yyyy'); // fullDate, formatDate(c.createAt, 'dd-MM-yyyy', 'en-US');
+          //  const datePipe = new DatePipe('es');
+          // c.createAt = datePipe.transform(c.createAt, 'EEEE dd, MMMM yyyy'); // fullDate, formatDate(c.createAt, 'dd-MM-yyyy', 'en-US');
           return c;
         });
       })
